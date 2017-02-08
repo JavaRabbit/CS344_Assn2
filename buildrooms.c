@@ -33,12 +33,10 @@ struct Room{
 
 int main() {
 
-   printf("Hello, World! \n");
    createDirectory();
 
-
-   //int roomArray[10];
    selectRooms();
+   pickStartEnd3();
    pickRoomConnections();
    createRooms(1);
    return 0;
@@ -107,20 +105,6 @@ void selectRooms(){
 
 void pickStartEnd3(){
   // the start room and end room are between 0-6 inclusive
-}
-
-void createRooms(int roomNamePos){
-  // each room is a struct
-  // use 7 since 7 rooms are created
-  struct Room baz;
-  baz.roomName = roomNames[roomNamePos];
-  printf("We live in %s\n", baz.roomName);
-
-}
-
-
-//   Pick room connections -----------------------------
-void pickRoomConnections(){
   // pick start 0-6
   int start;
   srand(time(NULL));
@@ -148,5 +132,20 @@ void pickRoomConnections(){
   for(int i=0; i < 7; i++){
     printf("room %d  is a %s room\n", i, roomTypes[startEndArray[i]]);
   }
+}
+
+void createRooms(int roomNamePos){
+  // each room is a struct
+  // use 7 since 7 rooms are created
+  struct Room baz;
+  baz.roomName = roomNames[roomNamePos];
+  printf("We live in %s\n", baz.roomName);
+
+}
+
+
+//   Pick room connections -----------------------------
+void pickRoomConnections(){
+
 
 }
