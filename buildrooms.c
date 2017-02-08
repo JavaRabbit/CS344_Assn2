@@ -3,12 +3,15 @@
 #include <sys/types.h>
 #include <time.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 // Prototypes
 void createDirectory();
-
+void selectRooms();
+void pickStartEnd3();
 void createRooms();
+void pickRoomConnections();
+void printRoomFiles();
 
 // create room names as string array
 char *roomNames[10] = {
@@ -16,11 +19,28 @@ char *roomNames[10] = {
   "five", "six", "seven", "eight", "nine", "ten"
 };
 
+char *roomTypes[3] = {"start", "middle", "end"};
+
+int roomArray[10];
+
+int startEndArray[7];
+
+struct Room{
+  char *roomName;
+  char *roomType;
+  struct Room *connectingRooms[6]; // 6 max connections
+};
+
 int main() {
 
    printf("Hello, World! \n");
    createDirectory();
-   createRooms();
+
+
+   //int roomArray[10];
+   selectRooms();
+   pickRoomConnections();
+   createRooms(1);
    return 0;
 }
 
@@ -30,7 +50,7 @@ void createDirectory(){
   mkdir("foo", 0755);
 }
 
-void createRooms(){
+void selectRooms(){
 
   printf("The first room name is %s\n", roomNames[0]);
 
@@ -53,14 +73,10 @@ void createRooms(){
 
 
   // pick random number between one and 10 with different seed
-  /*  ------------ DELETE --------------------------------------
-  int r;
-  srand(time(NULL));
-  r = rand()%10;
-  printf("The random number is %d\n",r );  */
+
 
   // First create a roomArray and set the values from 0-9
-  int roomArray[10];
+
   for(int i = 0; i < 10; i++){
     roomArray[i] = i;
   }
@@ -70,6 +86,7 @@ void createRooms(){
     // pick a random value from 0 to 9-p inclusive
     int mod = 9-p;
     int r;
+    // remember we reseed each time so we get different random values
     srand(time(NULL));
     r = rand()%mod;
     printf("The random  is %d\n",r );
@@ -86,8 +103,50 @@ void createRooms(){
     printf("The value of room is %d\n", roomArray[i]);
   }
 
+}
+
+void pickStartEnd3(){
+  // the start room and end room are between 0-6 inclusive
+}
+
+void createRooms(int roomNamePos){
+  // each room is a struct
+  // use 7 since 7 rooms are created
+  struct Room baz;
+  baz.roomName = roomNames[roomNamePos];
+  printf("We live in %s\n", baz.roomName);
+
+}
 
 
+//   Pick room connections -----------------------------
+void pickRoomConnections(){
+  // pick start 0-6
+  int start;
+  srand(time(NULL));
+  start = rand()%6;
+  printf("The start room  is %d\n",start );
 
+  //   ------  FIX -------------- hardcode end here, bad.
+  int end = start + 1;
+  if(end ==7 ){
+    end = 2;
+  }
+  printf("The end room  is %d\n", end );
+
+  //  now set up startEndArray
+  // the start room gets value 0, end room gets 2, middle gets 1
+
+  // everything gets 1 first
+  for(int i=0; i < 7; i++){
+    startEndArray[i] = 1;
+  }
+
+  startEndArray[start] = 0;
+  startEndArray[end] = 2;
+
+  for(int i=0; i < 7; i++){
+    printf("room %d  is a %s room\n", i, roomTypes[startEndArray[i]]);
+  }
 
 }
