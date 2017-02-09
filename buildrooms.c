@@ -9,15 +9,19 @@
 void createDirectory();
 void selectRooms();
 void pickStartEnd3();
+void roomLoopCaller4();
 void createRooms();
+
 void pickRoomConnections();
-void printRoomFiles();
+
 
 // create room names as string array
 char *roomNames[10] = {
   "alpha", "beta", "three", "four",
   "five", "six", "seven", "eight", "nine", "ten"
 };
+
+char *fileNames[7] = {"file1", "file2", "file3","file4", "file5", "file6", "file7"};
 
 char *roomTypes[3] = {"start", "middle", "end"};
 
@@ -37,8 +41,9 @@ int main() {
 
    selectRooms();
    pickStartEnd3();
-   pickRoomConnections();
-   createRooms(1);
+   roomLoopCaller4();
+   //pickRoomConnections();
+   //createRooms(1);
    return 0;
 }
 
@@ -134,12 +139,40 @@ void pickStartEnd3(){
   }
 }
 
+void roomLoopCaller4(){
+  // loop over each of the 7 rooms. Call the createRooms method
+  // with the right arguments
+
+  for(int i=0; i < 7; i++){
+    createRooms(i);
+  }
+}
+
 void createRooms(int roomNamePos){
   // each room is a struct
   // use 7 since 7 rooms are created
   struct Room baz;
   baz.roomName = roomNames[roomNamePos];
-  printf("We live in %s\n", baz.roomName);
+  //printf("We live in %s\n", baz.roomName);
+
+  //printf("%s is a %s type room \n", baz.roomName, roomTypes[startEndArray[roomNamePos]]);
+
+  // create a file
+  FILE *fp = NULL;
+  //  a is for append, w is for write
+
+
+  // name of the file will be the name of the room
+  char cat[50] = "./foo/";
+
+  strcat(cat, fileNames[roomNamePos]);
+  printf("%s\n", cat);
+
+  fp = fopen(cat,"w");
+  fprintf(fp, "%s is a %s type room \n", baz.roomName, roomTypes[startEndArray[roomNamePos]]);
+
+  // close
+  fclose(fp);
 
 }
 
