@@ -40,3 +40,19 @@ for(int i =0; i < 7; i++){
 for(int m = 0; m < 7; m++){
   printf("The value is %d\n", roomArray[m]);
 }
+
+///  Old code --------------------
+
+void selectRooms(){
+
+  printf("The first room name is %s\n", roomNames[0]);
+
+  // create a file
+  FILE *fp = NULL;
+  //  a is for append, w is for write
+  fp = fopen("./foo/textFile.txt" ,"w");
+  fprintf(fp, "writing in this file");
+
+  // close
+  fclose(fp);
+}

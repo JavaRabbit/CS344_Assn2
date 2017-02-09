@@ -55,17 +55,6 @@ void createDirectory(){
 
 void selectRooms(){
 
-  printf("The first room name is %s\n", roomNames[0]);
-
-  // create a file
-  FILE *fp = NULL;
-  //  a is for append, w is for write
-  fp = fopen("./foo/textFile.txt" ,"w");
-  fprintf(fp, "writing in this file");
-
-  // close
-  fclose(fp);
-
   /* hardcode 10 room names
   // but randomly only create 7 rooms
   one is start, one is end, and others are middle
@@ -92,7 +81,7 @@ void selectRooms(){
     // remember we reseed each time so we get different random values
     srand(time(NULL));
     r = rand()%mod;
-    printf("The random  is %d\n",r );
+    //printf("The random  is %d\n",r );
 
     // each time swap value at r with 9-p
     int temp = roomArray[mod];
@@ -108,6 +97,7 @@ void selectRooms(){
 
 }
 
+// this method is to help assign the start and end rooms
 void pickStartEnd3(){
   // the start room and end room are between 0-6 inclusive
   // pick start 0-6
@@ -143,29 +133,32 @@ void roomLoopCaller4(){
   // loop over each of the 7 rooms. Call the createRooms method
   // with the right arguments
 
+  int m;
   for(int i=0; i < 7; i++){
-    createRooms(i);
+    m = roomArray[i];
+    //printf("going to send %d to method\n", m);
+    createRooms(m);
   }
 }
 
+// This method is called 7 times by roomLoopCaller4
+// argument is roomNamePos
 void createRooms(int roomNamePos){
   // each room is a struct
   // use 7 since 7 rooms are created
   struct Room baz;
   baz.roomName = roomNames[roomNamePos];
-  //printf("We live in %s\n", baz.roomName);
+  printf("We live in %s\n", baz.roomName);
 
-  //printf("%s is a %s type room \n", baz.roomName, roomTypes[startEndArray[roomNamePos]]);
 
   // create a file
   FILE *fp = NULL;
-  //  a is for append, w is for write
 
 
   // name of the file will be the name of the room
   char cat[50] = "./foo/";
 
-  strcat(cat, fileNames[roomNamePos]);
+  strcat(cat, roomNames[roomNamePos]);
   printf("%s\n", cat);
 
   fp = fopen(cat,"w");
@@ -173,6 +166,7 @@ void createRooms(int roomNamePos){
 
   // close
   fclose(fp);
+
 
 }
 
