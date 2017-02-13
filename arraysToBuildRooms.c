@@ -5,11 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 
 
 // method Prototypes
 void createDirectory();
 void selectRooms();
+void pickStartEnd();
 
 char *roomNames[11] = {
   "placeHolderRoom","ALPHA", "BETA", "CHI", "FOUR",
@@ -32,6 +34,7 @@ int main(){
   // method to create a directory
   createDirectory();
   selectRooms();
+  pickStartEnd();
 
 
 }
@@ -47,7 +50,6 @@ void createDirectory(){
 
 // the purpose of this method is to select the 7 random rooms that will be used
 void selectRooms(){
-
   /*
     Goal is to select 7 rooms out of 10
     Another way to look at this is that we're selecting out 3 rooms to NOT be used
@@ -87,4 +89,27 @@ void selectRooms(){
   for(int i = 0; i < 10; i++){
     printf("The value of room is %d\n", roomArray[i]);
   }
+}
+
+void pickStartEnd(){
+  /*
+  Goal of method is to pick 2 rooms from roomArray[]  to select as our start and end rooms
+  The two rooms must be from roomArray[0] - roomArray[6] inclusive, because that's the 7 rooms
+  we randomly chose to use
+  */
+
+  int startRoom;
+  int endRoom;
+
+  // as an alternative to the wretched rand(), I'll use the pid and mod to get a random value
+  // for start
+  int pidNum = getpid();
+  startRoom = pidNum%7;
+  printf("the startRoom is %d\n", startRoom);
+
+  srand(time(NULL));
+  endRoom = rand()%7;
+  printf("the end room is %d\n", endRoom);
+
+  // let startRoom be a number between 0-6 inclusive
 }
