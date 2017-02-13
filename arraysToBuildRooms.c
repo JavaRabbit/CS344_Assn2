@@ -42,9 +42,16 @@ int main(){
   createDirectory();
   selectRooms();
   pickStartEnd();
-  //pickRoomConnections();
-  printf("the rand is %d\n", randomGen(10));
+  pickRoomConnections();
 
+  /*
+  printf("the rand is %d\n", randomGen(10));
+  printf("the rand is %d\n", randomGen(10));
+  printf("the rand is %d\n", randomGen(10));
+  printf("the rand is %d\n", randomGen(10));
+  printf("the rand is %d\n", randomGen(10));
+  printf("the rand is %d\n", randomGen(10));
+  */
 
 }
 
@@ -167,26 +174,81 @@ void pickRoomConnections(){
   // room connections
 
   // first count number of connections
-  for(int i = 1; i < 11; i++){
+  for(int row = 1; row < 11; row++){
     // this check of[i][11] checks to see if the room is being used
-    if(rooms[i][11] != 0){
-      int numConnections = 0;
-      // meaning we have a room being used
-      for(int k=1; k < 11; k++){
-        if(rooms[i][k] != 0){
+    if(rooms[row][11] != 0){  // all this below is for rooms being used
+      int numConnections = 0; // initialize the num of connections to 0
+      //int connectionPointer = 0; // this tells us where to add the connection to connLocation
+      int connLocation[6]; // initialize an array of size 6 to hold connections. 6 is max connections
+
+      // we start by counting the number of connections the room already has
+      for(int col=1; col < 11; col++){
+        if(rooms[row][col] != 0){
+          connLocation[numConnections] = col; // we put the number of the connecting room there.
           numConnections++; // we have a connecting room
         }
       }
-      printf("%s has %d connections\n", roomNames[i],numConnections);
 
+
+      printf("%s has %d connections\n", roomNames[row],numConnections);
+      while(numConnections < 3){
+        //printf("Foo bar\n");
+
+        // pick a number from 1-10 inclusive.  Then check it it against the connLocation, and that
+        //rooms [selectedRandom][11]  != 0 because that room is not used, and that row != selectedRandom
+        int randVal = randomGen(10);
+
+        // check if this randVal is a current used room
+        if(rooms[randVal][11] == 0){
+          // room is not one of the 7 rooms
+          continue;
+        }
+        int mybool = 0;
+        // use for loop to check if randomVal is already in connLocation
+        for(int i = 0; i < 6; i++){
+          if(connLocation[i] == randVal){
+            mybool = 5; //set to arbirtrary number
+            break; // already in the array as a connection, break out of for loop
+          }
+        }
+        if(mybool == 5){
+          continue; // continue with the while loop to get another randVal
+        }
+        if(randVal == row){
+          continue; // number selected is current row val, so get another randVal
+        }
+        // this is a good number.
+        rooms[row][randVal] = 55; // indicates a connection
+        rooms[randVal][row] = 55; // connection goes both ways
+        connLocation[numConnections] = randVal;
+        numConnections++;
+      }
+
+    } // end of if rooms[i][11] != 0)  meaning room is being used
+  }
+
+  // print out all the connections
+  for(int row = 1; row < 11; row++){
+
+    if(rooms[row][11] != 0){
+      for(int col = 1; col < 11; col++){
+        if(rooms[row][col] == 55){
+          printf("%s is connected to %s\n", roomNames[row], roomNames[col]);
+        }
+      }
     }
+
   }
 }
+
+
+
 
 // this is my own random number generator since rand() is buggy :(
 // credit to https://cboard.cprogramming.com/c-programming/51247-current-system-time-milliseconds.html
 int randomGen(int lim){
   struct timeb tmb;
   ftime(&tmb);
-  return tmb.millitm;
+  int numToReturn = (tmb.millitm%10) + 1;
+  return numToReturn;
 }
