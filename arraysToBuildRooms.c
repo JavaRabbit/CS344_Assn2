@@ -18,6 +18,9 @@ char *roomNames[11] = {
   "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"
 };
 
+// rooms but be 4  types, since C array default value is 0
+char *roomTypes[4] = {"blank","START_ROOM", "MID_ROOM", "END_ROOM"};
+
 // 2D array that will store room TYPE and CONNECTIONS
 // array has 11 rows, since there are 10 possible room Names, and I won't use row 0
 // array has 12 columns, since 10 possible rooms, and 1 column for room type, and won't be using col 0
@@ -112,20 +115,46 @@ void pickStartEnd(){
   // for the end room, get a random variable and multiply it by pidNum
   // Trouble with rand giving same values each time means funky ways of coming up with a random number
 
-  // start room and end room cannot be the same. Use a while loop to ensure that
-  // start and end rooms are different.
-  //
-  // this while loop will end if start and end values differ
+  // start room and end room cannot be the same.
 
   // need to FIX FIX !!!!!!!!!!!!!!!!!!!!!!!
+  // the while loop method wouln't stop occationally
   if(startRoom == 0 || startRoom== 1 || startRoom == 2 || startRoom ==3 ){
     endRoom = 6;
   } else{
     endRoom = 1;
   }
-
-
   printf("the end room is %d\n", endRoom);
 
-  // let startRoom be a number between 0-6 inclusive
+  // now that we have the end room and start Room. Set the rooms[][]
+
+  // the actual start room. If startRoom is 2, then the actually startRoom is
+  // roomArray[2]    or roomArray[startRoom]
+  // endRoom is roomArray[endRoom]   = which will give us a value between 1-10 inclusive
+
+  // loop over values 0-6 inclusive of RoomArray, and for each value, set the rooms[][]
+  // rooms[i][11]   since [11] is the roomType column
+  for(int i = 0; i < 7; i++){
+    int actualRoom = roomArray[i]; // this returns a val between 1-10 inclusive
+    rooms[actualRoom][11] = 2; // set every room to a mid_room first
+  }
+
+  // now for start and end rooms
+  int actualStartRoom = roomArray[startRoom];
+  int actualEndRoom = roomArray[endRoom];
+  rooms[actualStartRoom][11] = 1; // 1 is for start room
+  rooms[actualEndRoom][11] = 3; // 3 is for end room
+
+
+  // print test loop
+  for(int i = 1; i < 11; i++){
+    if(rooms[i][11] != 0){
+      // then we know this is a used room
+      printf("%s  is a %s\n", roomNames[i], roomTypes[rooms[i][11]]);
+    }
+  }
+
+
+
+
 }
