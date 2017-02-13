@@ -262,8 +262,18 @@ void createRoomFiles(){
       printf("The final file path is %s\n", cat);
 
       fp = fopen(cat,"w");
-      fprintf(fp, "ROOM NAME:  %s\n", roomNames[row]);
-      fprintf(fp, "ROOM TYPE:  %s\n", roomTypes[rooms[row][11]]);
+      fprintf(fp, "ROOM NAME: %s\n", roomNames[row]);
+
+      // to print out connections, use an incrementor
+      int connectionNumber = 1; // start at one
+      for(int col = 1; col < 11; col++){
+        if(rooms[row][col] == 55){
+          // 55 is the magic number for indicating a connecting room
+          fprintf(fp, "CONNECTION %d: %s\n", connectionNumber, roomNames[col]); // use col!
+          connectionNumber++;
+        }
+      }
+      fprintf(fp, "ROOM TYPE: %s", roomTypes[rooms[row][11]]);
       // close
       fclose(fp);
 
