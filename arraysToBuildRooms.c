@@ -261,6 +261,12 @@ void createRoomFiles(){
       strcat(cat, roomNames[row]); // this will be the file path of the FILE
       printf("The final file path is %s\n", cat);
 
+      fp = fopen(cat,"w");
+      fprintf(fp, "ROOM NAME:  %s\n", roomNames[row]);
+      fprintf(fp, "ROOM TYPE:  %s\n", roomTypes[rooms[row][11]]);
+      // close
+      fclose(fp);
+
     }
   }
 }
