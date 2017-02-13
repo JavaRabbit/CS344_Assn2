@@ -12,6 +12,7 @@
 void createDirectory();
 void selectRooms();
 void pickStartEnd();
+void pickRoomConnections();
 
 char *roomNames[11] = {
   "placeHolderRoom","ALPHA", "BETA", "CHI", "FOUR",
@@ -38,6 +39,7 @@ int main(){
   createDirectory();
   selectRooms();
   pickStartEnd();
+  pickRoomConnections();
 
 
 }
@@ -154,7 +156,23 @@ void pickStartEnd(){
     }
   }
 
+}
 
+void pickRoomConnections(){
+  // for each value in roomArray, 0-6 inclusive, pick 3 more values 0-6 inclusive to be
+  // room connections
 
-
+  // first count number of connections
+  for(int i = 1; i < 11; i++){
+    if(rooms[i][11] != 0){
+      int numConnections = 0;
+      // meaning we have a room being used
+      for(int k=1; k < 11; k++){
+        if(rooms[i][k] != 0){
+          numConnections++; // we have a connecting room
+        }
+      }
+      printf("%s has %d connections\n", roomNames[i],numConnections);
+    }
+  }
 }
