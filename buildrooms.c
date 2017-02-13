@@ -158,7 +158,7 @@ void createRooms(int roomNamePos){
   // name of the file will be the name of the room
   char cat[50] = "./foo/";
 
-  strcat(cat, roomNames[roomNamePos]);
+  strcat(cat, baz.roomName);
   printf("%s\n", cat);
 
   fp = fopen(cat,"w");
