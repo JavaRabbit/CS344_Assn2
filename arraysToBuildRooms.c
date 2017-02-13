@@ -12,7 +12,7 @@ void createDirectory();
 void selectRooms();
 
 char *roomNames[11] = {
-  "blankroom","ALPHA", "BETA", "CHI", "FOUR",
+  "placeHolderRoom","ALPHA", "BETA", "CHI", "FOUR",
   "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"
 };
 
@@ -61,10 +61,11 @@ void selectRooms(){
   Thus, at the end, our random 7 values will be in the array at positions [0] - [6] inclusive
   */
 
-  // First create a roomArray and set the values from 0-9
-
+  // First create a roomArray and set the values from 1-10 inclusive, because it corresponds to valid
+  // rooms in roomNames[]
   for(int i = 0; i < 10; i++){
-    roomArray[i] = i;
+    // plus 1, because the 0th element is Room 1, [1] is Room 2, etc.
+    roomArray[i] = i+1;
   }
 
   // now that each room is set, 3 times, we will pick out numbers and put at end
@@ -75,13 +76,11 @@ void selectRooms(){
     // remember we reseed each time so we get different random values
     srand(time(NULL));
     r = rand()%mod;
-    //printf("The random  is %d\n",r );
 
     // each time swap value at r with 9-p
     int temp = roomArray[mod];
     roomArray[mod] = roomArray[r];
     roomArray[r] = temp;
-
 
   }
 
