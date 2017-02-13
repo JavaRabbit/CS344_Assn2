@@ -45,16 +45,6 @@ int main(){
   pickStartEnd();
   pickRoomConnections();
   createRoomFiles();
-
-  /*
-  printf("the rand is %d\n", randomGen(10));
-  printf("the rand is %d\n", randomGen(10));
-  printf("the rand is %d\n", randomGen(10));
-  printf("the rand is %d\n", randomGen(10));
-  printf("the rand is %d\n", randomGen(10));
-  printf("the rand is %d\n", randomGen(10));
-  */
-
 }
 
 void createDirectory(){
@@ -83,13 +73,15 @@ void selectRooms(){
 
   // First create a roomArray and set the values from 1-10 inclusive, because it corresponds to valid
   // rooms in roomNames[]
-  for(int i = 0; i < 10; i++){
+  int i;
+  for(i = 0; i < 10; i++){
     // plus 1, because the 0th element is Room 1, [1] is Room 2, etc.
     roomArray[i] = i+1;
   }
 
   // now that each room is set, 3 times, we will pick out numbers and put at end
-  for(int p = 0; p < 3; p++){
+  int p;
+  for(p = 0; p < 3; p++){
     // pick a random value from 0 to 9-p inclusive
     int mod = 9-p;
     int r;
@@ -104,8 +96,9 @@ void selectRooms(){
 
   }
 
-  for(int i = 0; i < 10; i++){
-    printf("The value of room is %d\n", roomArray[i]);
+  int ii;
+  for(ii = 0; ii < 10; ii++){
+    printf("The value of room is %d\n", roomArray[ii]);
   }
 }
 
@@ -149,7 +142,8 @@ void pickStartEnd(){
 
   // loop over values 0-6 inclusive of RoomArray, and for each value, set the rooms[][]
   // rooms[i][11]   since [11] is the roomType column
-  for(int i = 0; i < 7; i++){
+  int i;
+  for(i = 0; i < 7; i++){
     int actualRoom = roomArray[i]; // this returns a val between 1-10 inclusive
     rooms[actualRoom][11] = 2; // set every room to a mid_room first
   }
@@ -162,10 +156,11 @@ void pickStartEnd(){
 
 
   // print test loop
-  for(int i = 1; i < 11; i++){
+  int ip;
+  for(ip = 1; ip < 11; ip++){
     if(rooms[i][11] != 0){
       // then we know this is a used room
-      printf("%s  is a %s\n", roomNames[i], roomTypes[rooms[i][11]]);
+      printf("%s  is a %s\n", roomNames[ip], roomTypes[rooms[ip][11]]);
     }
   }
 
@@ -176,17 +171,19 @@ void pickRoomConnections(){
   // room connections
 
   // first count number of connections
-  for(int row = 1; row < 11; row++){
+  int row3;
+  for(row3 = 1; row3 < 11; row3++){
     // this check of[i][11] checks to see if the room is being used
-    if(rooms[row][11] != 0){  // all this below is for rooms being used
+    if(rooms[row3][11] != 0){  // all this below is for rooms being used
       int numConnections = 0; // initialize the num of connections to 0
       //int connectionPointer = 0; // this tells us where to add the connection to connLocation
       int connLocation[6]; // initialize an array of size 6 to hold connections. 6 is max connections
 
       // we start by counting the number of connections the room already has
-      for(int col=1; col < 11; col++){
-        if(rooms[row][col] != 0){
-          connLocation[numConnections] = col; // we put the number of the connecting room there.
+      int col4;
+      for(col4=1; col4 < 11; col4++){
+        if(rooms[row3][col4] != 0){
+          connLocation[numConnections] = col4; // we put the number of the connecting room there.
           numConnections++; // we have a connecting room
         }
       }
@@ -207,7 +204,8 @@ void pickRoomConnections(){
         }
         int mybool = 0;
         // use for loop to check if randomVal is already in connLocation
-        for(int i = 0; i < 6; i++){
+        int i;
+        for(i = 0; i < 6; i++){
           if(connLocation[i] == randVal){
             mybool = 5; //set to arbirtrary number
             break; // already in the array as a connection, break out of for loop
@@ -216,12 +214,12 @@ void pickRoomConnections(){
         if(mybool == 5){
           continue; // continue with the while loop to get another randVal
         }
-        if(randVal == row){
+        if(randVal == row3){
           continue; // number selected is current row val, so get another randVal
         }
         // this is a good number.
-        rooms[row][randVal] = 55; // indicates a connection
-        rooms[randVal][row] = 55; // connection goes both ways
+        rooms[row3][randVal] = 55; // indicates a connection
+        rooms[randVal][row3] = 55; // connection goes both ways
         connLocation[numConnections] = randVal;
         numConnections++;
       }
@@ -230,12 +228,14 @@ void pickRoomConnections(){
   }
 
   // print out all the connections
-  for(int row = 1; row < 11; row++){
+  int row2;
+  for(row2 = 1; row2 < 11; row2++){
 
-    if(rooms[row][11] != 0){
-      for(int col = 1; col < 11; col++){
-        if(rooms[row][col] == 55){
-          printf("%s is connected to %s\n", roomNames[row], roomNames[col]);
+    if(rooms[row2][11] != 0){
+      int col;
+      for(col = 1; col < 11; col++){
+        if(rooms[row2][col] == 55){
+          printf("%s is connected to %s\n", roomNames[row2], roomNames[col]);
         }
       }
     }
@@ -251,7 +251,8 @@ void createRoomFiles(){
   //printf("The file path is: %s\n", cat);
 
   // iterate over all the rooms, check for which ones are being used
-  for(int row = 1; row < 11; row++){
+  int row;
+  for(row = 1; row < 11; row++){
     if(rooms[row][11] != 0){
       // file is being used here
       // variable to hold the final file path
@@ -266,7 +267,8 @@ void createRoomFiles(){
 
       // to print out connections, use an incrementor
       int connectionNumber = 1; // start at one
-      for(int col = 1; col < 11; col++){
+      int col;
+      for(col = 1; col < 11; col++){
         if(rooms[row][col] == 55){
           // 55 is the magic number for indicating a connecting room
           fprintf(fp, "CONNECTION %d: %s\n", connectionNumber, roomNames[col]); // use col!
@@ -280,8 +282,6 @@ void createRoomFiles(){
     }
   }
 }
-
-
 
 
 // this is my own random number generator since rand() is buggy :(
