@@ -143,3 +143,24 @@ if(cmp == 0){
 
 //printf("Before, The length of destination is %lu\n", strlen(destination));
 //printf("The length of destination is %lu\n", strlen(destination));
+
+
+// trying to get random endRoom value
+int myboolean = 1;
+int pidIncrementer = 3;
+
+while(myboolean == 1){
+  int midPid = pidNum/2;
+  endRoom = midPid%7;
+  printf("the end room is %d\n", midPid);
+  if(endRoom == startRoom){
+    if(midPid > 0){
+      midPid = pidNum * pidIncrementer;
+      pidIncrementer++; // in case we need to use pidIncrementer again,
+    }
+    continue;
+  } else{
+
+    break; // we got a good value for end rom
+  }
+}

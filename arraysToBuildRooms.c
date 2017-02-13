@@ -100,15 +100,31 @@ void pickStartEnd(){
 
   int startRoom;
   int endRoom;
+  int multiplier;
 
   // as an alternative to the wretched rand(), I'll use the pid and mod to get a random value
-  // for start
+  // for start that's between 0-6 inclusive
   int pidNum = getpid();
   startRoom = pidNum%7;
   printf("the startRoom is %d\n", startRoom);
 
-  srand(time(NULL));
-  endRoom = rand()%7;
+
+  // for the end room, get a random variable and multiply it by pidNum
+  // Trouble with rand giving same values each time means funky ways of coming up with a random number
+
+  // start room and end room cannot be the same. Use a while loop to ensure that
+  // start and end rooms are different.
+  //
+  // this while loop will end if start and end values differ
+
+  // need to FIX FIX !!!!!!!!!!!!!!!!!!!!!!!
+  if(startRoom == 0 || startRoom== 1 || startRoom == 2 || startRoom ==3 ){
+    endRoom = 6;
+  } else{
+    endRoom = 1;
+  }
+
+
   printf("the end room is %d\n", endRoom);
 
   // let startRoom be a number between 0-6 inclusive
