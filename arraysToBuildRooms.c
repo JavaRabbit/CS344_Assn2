@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 
 // method Prototypes
@@ -15,12 +16,20 @@ char *roomNames[11] = {
 };
 
 int main(){
-  printf("Trying again to fix this build room thing\n");
+
+  // method to create a directory
   createDirectory();
+
+
 }
 
 void createDirectory(){
   // create a directory kwongb.rooms.<processID>
   // change this to processID here
-  mkdir("kwongb", 0755);
+  char dirName[20];
+  int mm = getpid();
+  printf("%d is the current process\n", mm);
+  sprintf(dirName,"kwongb.rooms.%d", mm);
+  printf("FInally, the room generated is %s\n\n", dirName);
+  mkdir(dirName, 0755);
 }
