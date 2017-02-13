@@ -14,6 +14,7 @@ void createDirectory();
 void selectRooms();
 void pickStartEnd();
 void pickRoomConnections();
+void createRoomFiles();
 
 int randomGen();
 
@@ -43,6 +44,7 @@ int main(){
   selectRooms();
   pickStartEnd();
   pickRoomConnections();
+  createRoomFiles();
 
   /*
   printf("the rand is %d\n", randomGen(10));
@@ -190,7 +192,7 @@ void pickRoomConnections(){
       }
 
 
-      printf("%s has %d connections\n", roomNames[row],numConnections);
+      //printf("%s has %d connections\n", roomNames[row],numConnections);
       while(numConnections < 3){
         //printf("Foo bar\n");
 
@@ -238,6 +240,28 @@ void pickRoomConnections(){
       }
     }
 
+  }
+}
+
+void createRoomFiles(){
+  // create a file
+  FILE *fp = NULL;
+
+
+  //printf("The file path is: %s\n", cat);
+
+  // iterate over all the rooms, check for which ones are being used
+  for(int row = 1; row < 11; row++){
+    if(rooms[row][11] != 0){
+      // file is being used here
+      // variable to hold the final file path
+      char cat[50] = "./";
+      strcat(cat, dirName);
+      strcat(cat, "/");
+      strcat(cat, roomNames[row]); // this will be the file path of the FILE
+      printf("The final file path is %s\n", cat);
+
+    }
   }
 }
 
