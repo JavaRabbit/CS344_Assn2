@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <sys/timeb.h>
 
 
 // method Prototypes
@@ -13,6 +14,8 @@ void createDirectory();
 void selectRooms();
 void pickStartEnd();
 void pickRoomConnections();
+
+int randomGen();
 
 char *roomNames[11] = {
   "placeHolderRoom","ALPHA", "BETA", "CHI", "FOUR",
@@ -39,7 +42,8 @@ int main(){
   createDirectory();
   selectRooms();
   pickStartEnd();
-  pickRoomConnections();
+  //pickRoomConnections();
+  printf("the rand is %d\n", randomGen(10));
 
 
 }
@@ -164,6 +168,7 @@ void pickRoomConnections(){
 
   // first count number of connections
   for(int i = 1; i < 11; i++){
+    // this check of[i][11] checks to see if the room is being used
     if(rooms[i][11] != 0){
       int numConnections = 0;
       // meaning we have a room being used
@@ -173,6 +178,15 @@ void pickRoomConnections(){
         }
       }
       printf("%s has %d connections\n", roomNames[i],numConnections);
+
     }
   }
+}
+
+// this is my own random number generator since rand() is buggy :(
+// credit to https://cboard.cprogramming.com/c-programming/51247-current-system-time-milliseconds.html
+int randomGen(int lim){
+  struct timeb tmb;
+  ftime(&tmb);
+  return tmb.millitm;
 }
