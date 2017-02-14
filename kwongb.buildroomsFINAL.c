@@ -112,22 +112,19 @@ void pickStartEnd(){
   // as an alternative to the wretched rand(), I'll use the pid and mod to get a random value
   // for start that's between 0-6 inclusive
   int pidNum = getpid();
-  startRoom = pidNum%7;
-
-
-  // for the end room, get a random variable and multiply it by pidNum
-  // Trouble with rand giving same values each time means funky ways of coming up with a random number
-
   // start room and end room cannot be the same.
 
-
-  // the while loop method wouln't stop occationally
-  if(startRoom == 0 || startRoom== 1 || startRoom == 2 || startRoom ==3 ){
-    endRoom = 6;
-  } else{
-    endRoom = 1;
-  }
-
+  startRoom = pidNum%7;
+  endRoom = randomGen(10)%7;
+  if(startRoom == endRoom){
+   if(endRoom < 3){
+     endRoom = endRoom +2;
+   } else {
+      endRoom = endRoom -2;
+   }
+  } 
+  
+  // Trouble with rand giving same values each time means funky ways of coming up with a random number
 
   // now that we have the end room and start Room. Set the rooms[][]
 

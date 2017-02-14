@@ -164,3 +164,30 @@ while(myboolean == 1){
     break; // we got a good value for end rom
   }
 }
+
+
+
+
+// about line 199 fron tenbyten
+
+lenToCopy = strlen(line) - 12;  // "ROOM NAME: " is 11, then + 1
+//printf("%d is how much to copy\n", lenToCopy);
+
+//char newStr[lenToCopy ]; // initialize a string of 1 byte larger than whats needed
+
+
+ char newStr[lenToCopy+1]; // +1 if character is 5 chars long, then you need 6 bytes
+//printf("before memcpy, len of newStr is %lu\n", strlen(newStr));
+// 11 since where start, starts at 0
+//strlcpy(newStr, &line[11], lenToCopy+1);
+
+//printf("len of newStr with strLcpy is %lu\n", strlen(newStr));
+//strcpy(newStr, line + 11);
+
+// using memcpy
+
+//memcpy(&newStr[0], &line[11], sizeof(char));
+memcpy(newStr, line +11, lenToCopy+1 );
+newStr[lenToCopy] = '\0'; // force null terminator at end of string
+//printf("the length of newstr is %lu\n", strlen(newStr));
+//printf("THe room NAME is:%s\n", newStr);
